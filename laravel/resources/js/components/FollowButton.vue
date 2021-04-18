@@ -1,0 +1,45 @@
+<template>
+  <div>
+    <button
+      class="btn-sm shadow-none border border-primary p-2"
+      :class="buttonColor"
+    >
+      <i
+        class="mr-1"
+        :class="buttonIcon"
+      ></i>
+      {{ buttonText }}
+    </button>
+  </div>
+</template>
+
+<script>
+  export default {
+    // デフォルトはfalse
+    data() {
+      return {
+        isFollowedBy: false,
+      }
+    },
+    computed: {
+      
+      buttonColor() {
+        return this.isFollowedBy
+          ? 'bg-primary text-white'
+          : 'bg-white'
+      },
+      // isFollowedByの状態によりアイコン変更
+      buttonIcon() {
+        return this.isFollowedBy
+          ? 'fas fa-user-check'
+          : 'fas fa-user-plus'
+      },
+      // isFollowedByの状態により文言変更
+      buttonText() {
+        return this.isFollowedBy
+          ? 'フォロー中'
+          : 'フォロー'
+      },
+    },
+  }
+</script>
