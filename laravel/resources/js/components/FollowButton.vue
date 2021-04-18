@@ -15,14 +15,21 @@
 
 <script>
   export default {
+    props: {
+      // $user->isFollowedBy(Auth::user())の結果(json)
+      initialIsFollowedBy: {
+        type: Boolean,
+        default: false,
+      },
+    },
     // デフォルトはfalse
     data() {
       return {
-        isFollowedBy: false,
+        isFollowedBy: this.initialIsFollowedBy,
       }
     },
     computed: {
-      
+      // isFollowedByの状態により色変更
       buttonColor() {
         return this.isFollowedBy
           ? 'bg-primary text-white'
