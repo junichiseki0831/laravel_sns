@@ -15,7 +15,11 @@
             <follow-button
               class="ml-auto"
               :initial-is-followed-by='@json($user->isFollowedBy(Auth::user()))'
+              :authorized='@json(Auth::check())'
+              endpoint="{{ route('users.follow', ['name' => $user->name]) }}"
             >
+            <!-- Authファサードのcheckメソッドを使うと、ログイン中かどうかを論理値で返す -->
+            <!-- URLを取得し渡す -->
             </follow-button>
           @endif
         </div>

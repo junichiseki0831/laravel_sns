@@ -3,6 +3,7 @@
     <button
       class="btn-sm shadow-none border border-primary p-2"
       :class="buttonColor"
+      @click="clickFollow" 
     >
       <i
         class="mr-1"
@@ -20,6 +21,15 @@
       initialIsFollowedBy: {
         type: Boolean,
         default: false,
+      },
+      // :authorized='@json(Auth::check())'の結果
+      authorized: {
+        type: Boolean,
+        default: false,
+      },
+      // endpoint="{{ route('users.follow', ['name' => $user->name]) }}"
+      endpoint: {
+        type: String,
       },
     },
     // デフォルトはfalse
@@ -46,6 +56,37 @@
         return this.isFollowedBy
           ? 'フォロー中'
           : 'フォロー'
+      },
+    },
+    methods: {
+      clickFollow() {
+        if (!this.authorized) {
+          alert('フォロー機能はログイン中のみ使用できます')
+          return
+        }
+
+        // フォロー中であればunfollowメソッド、フォローしていなければfollowメソッドを実行
+        this.isFollowedBy
+          ? this.unfollow()
+          : this.follow()
+      },
+
+      async follow() {
+        // async/awaitで非同期処理を簡潔に書く
+        // axios.put(this.endpoint)は、URIusers/{name}/followに対して、HTTPのPUTメソッドでリクエスト
+        const response = await axios.put(this.endpoint)
+
+        // isFollowedByにtrueを代入しフォローボタンはフォロー中の表示になる
+        this.isFollowedBy = true
+
+        // responseには、axiosによるHTTP通信の結果が代入され、response.dataとすることでレスポンスのボディ部にアクセスできる。
+        // response.data.nameとすることで、フォローしたユーザー名を取得できる。
+      },
+      
+      async unfollow() {
+        const response = await axios.delete(this.endpoint)
+
+        this.isFollowedBy = false
       },
     },
   }
