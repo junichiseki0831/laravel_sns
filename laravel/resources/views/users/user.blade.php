@@ -15,7 +15,7 @@
         <!-- Authファサードのcheckメソッドを使うと、ログイン中かどうかを論理値で返す -->
         <!-- URLを取得し渡す -->
         </follow-button>
-        
+
       @endif
     </div>
     <h2 class="h5 card-title m-0">
@@ -26,10 +26,10 @@
   </div>
   <div class="card-body">
     <div class="card-text">
-      <a href="" class="text-muted">
+      <a href="{{ route('users.followings', ['name' => $user->name]) }}" class="text-muted"> 
         {{ $user->count_followings }} フォロー
       </a>
-      <a href="" class="text-muted">
+      <a href="{{ route('users.followers', ['name' => $user->name]) }}" class="text-muted">
         {{ $user->count_followers }} フォロワー
       </a>
     </div>
