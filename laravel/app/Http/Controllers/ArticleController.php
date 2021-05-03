@@ -50,7 +50,7 @@ class ArticleController extends Controller
         //     ],
         // ];
 
-    $articles = Article::all()->sortByDesc('created_at');
+    $articles = Article::all()->sortByDesc('created_at')->load(['user', 'likes', 'tags']);
 
     return view('articles.index', compact('articles'));
 
